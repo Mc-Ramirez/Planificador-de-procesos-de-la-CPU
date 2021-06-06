@@ -49,7 +49,7 @@ public class App {
                             tablero[x][z] = "*";
                         }
                     }
-                    proceso.insertaTiemposConjuntoInicioFin(tiempos.getKey(), posicionFinal);
+                    proceso.insertaTiemposConjuntoInicioFinFIFO(tiempos.getKey(), posicionFinal);
                 } else {
                     int inicio = tiempos.getKey();
                     int fin = tiempos.getValue();
@@ -71,7 +71,8 @@ public class App {
                                             }
                                         }
                                     }
-                                    proceso.insertaTiemposConjuntoInicioFin(inicioProceso, (fin + inicioProceso) - 1);
+                                    proceso.insertaTiemposConjuntoInicioFinFIFO(inicioProceso,
+                                            (fin + inicioProceso) - 1);
                                 }
                                 inicio = tiempos.getKey();
                                 fin = tiempos.getValue();
@@ -88,6 +89,7 @@ public class App {
         proceso.imprimeMapaTiempos();
 
         System.out.println(proceso.toString());
+        System.out.println(proceso.calculaOrdenEjecucionSJF());
         entrada.close();
     }
 }
