@@ -8,8 +8,8 @@ public class App {
         Scanner entrada = new Scanner(System.in);
         System.out.println("Numero de procesos que realizará la CPU: ");
         int numeroProcesos = entrada.nextInt();
-        Proceso proceso = new Proceso();
-        proceso.iniciaConjuntoDatos(numeroProcesos);
+        Proceso proceso = new Proceso(numeroProcesos);
+        // proceso.iniciaConjuntoDatos();
 
         int columnas = 0;
         int filas = numeroProcesos;
@@ -37,7 +37,7 @@ public class App {
         int posicionFinal = 0;
         int contador = 0;
 
-        Map<Integer, Integer> tiemposProceso = proceso.obtenerTiemposMap();
+        Map<Integer, Integer> tiemposProceso = proceso.getTiempos();
 
         while (contador < filas) {
             for (Map.Entry<Integer, Integer> tiempos : tiemposProceso.entrySet()) {
@@ -45,11 +45,11 @@ public class App {
                 posicionFinal += posicionColumna;
                 if (contador == 0) {
                     for (int x = 0; x <= contador; x++) {
-                        for (int z = 0; z <= posicionFinal; z++) {
+                        for (int z = tiempos.getKey(); z <= posicionFinal; z++) {
                             tablero[x][z] = "*";
                         }
-
                     }
+                    proceso.insertaTiemposConjuntoInicioFin(tiempos.getKey(), posicionFinal);
                 } else {
                     int inicio = tiempos.getKey();
                     int fin = tiempos.getValue();
@@ -70,13 +70,14 @@ public class App {
 
                                             }
                                         }
-
                                     }
+                                    proceso.insertaTiemposConjuntoInicioFin(inicioProceso, (fin + inicioProceso) - 1);
                                 }
                                 inicio = tiempos.getKey();
                                 fin = tiempos.getValue();
                                 inicioProceso = 0;
                             }
+
                         }
                     }
                 }
